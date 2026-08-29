@@ -1,4 +1,4 @@
-name: CHEF APK bauen
+name: CHEF FX32 APK bauen
 
 on:
   workflow_dispatch:
@@ -17,26 +17,21 @@ jobs:
           distribution: temurin
           java-version: '17'
 
-      - name: Android SDK einrichten
-        uses: android-actions/setup-android@v3
-
       - name: Gradle einrichten
         uses: gradle/actions/setup-gradle@v4
         with:
           gradle-version: '8.11.1'
 
-      - name: Chef-App entpacken
+      - name: CHEF FX32 entpacken
         run: |
-          rm -rf chefbuild
-          mkdir -p chefbuild
-          unzip -q Karsak-Stundenzettel-CHEF-FX30-SUPABASE.zip -d chefbuild
-          echo "=== Inhalt ==="
-          find chefbuild -maxdepth 3 -type f | head -100
+          rm -rf chef32build
+          mkdir -p chef32build
+          unzip -o "Karsak-Stundenzettel-CHEF-FX32-SUPABASE-KALENDER-FIX.zip" -d chef32build
 
-      - name: APK bauen
+      - name: CHEF FX32 APK bauen
         run: |
-          cd chefbuild
-          PROJECT_DIR="$(find . -name settings.gradle.kts -o -name settings.gradle | head -1 | xargs dirname)"
+          cd chef32build
+          PROJECT_DIR="$(find . -name settings.gradle.kts -printf '%h\n' | head -1)"
           echo "Projektordner: $PROJECT_DIR"
           cd "$PROJECT_DIR"
           gradle assembleDebug
@@ -44,6 +39,6 @@ jobs:
       - name: APK bereitstellen
         uses: actions/upload-artifact@v4
         with:
-          name: Karsak-Stundenzettel-CHEF
-          path: chefbuild/**/build/outputs/apk/debug/*.apk
+          name: Karsak-Stundenzettel-CHEF-FX32
+          path: chef32build/**/build/outputs/apk/debug/*.apk
           if-no-files-found: error
