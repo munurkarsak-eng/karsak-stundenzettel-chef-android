@@ -25,15 +25,15 @@ jobs:
         with:
           gradle-version: '8.11.1'
 
-      - name: CHEF FX41 entpacken
+      - name: CHEF FX45 entpacken
         run: |
-          rm -rf chef41build
-          mkdir -p chef41build
-          unzip -o "Karsak-Stundenzettel-CHEF-FX41-ANZEIGE-FIX.zip" -d chef41build
+          rm -rf chef45build
+          mkdir -p chef45build
+          unzip -o "Karsak-Stundenzettel-CHEF-FX45-ABGELEHNTE-STUNDEN-FIX.zip" -d chef45build
 
-      - name: CHEF FX41 APK bauen
+      - name: CHEF FX45 APK bauen
         run: |
-          cd chef41build
+          cd chef45build
           PROJECT_DIR="$(find . -name settings.gradle.kts -printf '%h\n' | head -1)"
           echo "Projektordner: $PROJECT_DIR"
           cd "$PROJECT_DIR"
@@ -42,6 +42,6 @@ jobs:
       - name: APK bereitstellen
         uses: actions/upload-artifact@v4
         with:
-          name: Karsak-Stundenzettel-CHEF-FX41
-          path: chef41build/**/build/outputs/apk/debug/*.apk
+          name: Karsak-Stundenzettel-CHEF-FX45
+          path: chef45build/**/build/outputs/apk/debug/*.apk
           if-no-files-found: error
