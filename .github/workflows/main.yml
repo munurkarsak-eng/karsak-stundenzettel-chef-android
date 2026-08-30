@@ -17,20 +17,23 @@ jobs:
           distribution: temurin
           java-version: '17'
 
+      - name: Android SDK einrichten
+        uses: android-actions/setup-android@v3
+
       - name: Gradle einrichten
         uses: gradle/actions/setup-gradle@v4
         with:
           gradle-version: '8.11.1'
 
-      - name: CHEF FX32 entpacken
+      - name: CHEF FX39 entpacken
         run: |
-          rm -rf chef32build
-          mkdir -p chef32build
-          unzip -o "Karsak-Stundenzettel-CHEF-FX32-SUPABASE-KALENDER-FIX.zip" -d chef32build
+          rm -rf chef39build
+          mkdir -p chef39build
+          unzip -o "Karsak-Stundenzettel-CHEF-FX39-MONATSABRECHNUNG-SICHTBAR.zip" -d chef39build
 
-      - name: CHEF FX32 APK bauen
+      - name: CHEF FX39 APK bauen
         run: |
-          cd chef32build
+          cd chef39build
           PROJECT_DIR="$(find . -name settings.gradle.kts -printf '%h\n' | head -1)"
           echo "Projektordner: $PROJECT_DIR"
           cd "$PROJECT_DIR"
@@ -39,6 +42,6 @@ jobs:
       - name: APK bereitstellen
         uses: actions/upload-artifact@v4
         with:
-          name: Karsak-Stundenzettel-CHEF-FX32
-          path: chef32build/**/build/outputs/apk/debug/*.apk
+          name: Karsak-Stundenzettel-CHEF-FX39
+          path: chef39build/**/build/outputs/apk/debug/*.apk
           if-no-files-found: error
