@@ -1,4 +1,4 @@
-name: CHEF FX48 APK bauen
+name: CHEF FX49 APK bauen
 
 on:
   workflow_dispatch:
@@ -25,15 +25,15 @@ jobs:
         with:
           gradle-version: '8.11.1'
 
-      - name: CHEF FX48 entpacken
+      - name: CHEF FX49 entpacken
         run: |
-          rm -rf chef48build
-          mkdir -p chef48build
-          unzip -o "Karsak-Stundenzettel-CHEF-FX48-BAUSTELLEN-SYNC.zip" -d chef48build
+          rm -rf chef49build
+          mkdir -p chef49build
+          unzip -o "Karsak-Stundenzettel-CHEF-FX49-IMMER-BEARBEITBAR-CHEF-LOGO.zip" -d chef49build
 
-      - name: CHEF FX48 APK bauen
+      - name: CHEF FX49 APK bauen
         run: |
-          cd chef48build
+          cd chef49build
           PROJECT_DIR="$(find . -name settings.gradle.kts -printf '%h\n' | head -1)"
           echo "Projektordner: $PROJECT_DIR"
           cd "$PROJECT_DIR"
@@ -42,6 +42,4 @@ jobs:
       - name: APK bereitstellen
         uses: actions/upload-artifact@v4
         with:
-          name: Karsak-Stundenzettel-CHEF-FX48
-          path: chef48build/**/build/outputs/apk/debug/*.apk
-          if-no-files-found: error
+          name: Karsak-Stundenz
