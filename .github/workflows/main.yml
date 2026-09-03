@@ -39,7 +39,10 @@ jobs:
           cd "$PROJECT_DIR"
           gradle assembleDebug
 
-      - name: APK bereitstellen
+            - name: APK bereitstellen
         uses: actions/upload-artifact@v4
         with:
-          name: Karsak-Stundenz
+          name: Karsak-Stundenzettel-CHEF-FX50
+          path: chef50build/**/build/outputs/apk/debug/*.apk
+          if-no-files-found: error
+        
