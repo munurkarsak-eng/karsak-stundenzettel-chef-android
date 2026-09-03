@@ -1,4 +1,4 @@
-name: CHEF FX50 APK bauen
+name: CHEF FX51 APK bauen
 
 on:
   workflow_dispatch:
